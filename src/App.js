@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Header from './components/Header';
+import Banner from './components/Banner';
+import MovieList from './components/MovieList';
+import { useState, useEffect } from 'react'
 function App() {
+  const [movie, setMovie] = useState([]);
+  const [movieRate, setMovieRate] = useState([]);
+
+  useEffect(() => {
+    const fetchMovie = async () => {
+      const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+        }
+      };
+      const url1 = 'https://api.themoviedb.org/3/movie/popular?language=vi&page=1';
+      const url2 = 'https://api.themoviedb.org/3/movie/top_rated?language=vi&page=1';
+
+      const [res1, res2] = await Promise.all([
+        fetch(url1, options),
+        fetch(url2, options)
+      ])
+      const data1 = await res1.json();
+      const data2 = await res2.json();
+
+      setMovie(data1.results);
+      setMovieRate(data2.results);
+    }
+    fetchMovie();
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className='bg-black pb-10'>
+        <Header />
+        <Banner />
+        <MovieList title={'Phim Hot'} data={movie} />
+        <MovieList title={'Phim Đề Cử'} data={movieRate} />
+      </div>
+    </>
   );
 }
 
