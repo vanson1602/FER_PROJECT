@@ -1,3 +1,147 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom styles for Banner carousel dots */
+.custom-dot-list-style {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 30;
+}
+
+.custom-dot-list-style button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-dot-list-style button.react-multi-carousel-dot--active {
+  background: #10b981;
+  border-color: #10b981;
+  transform: scale(1.2);
+}
+
+.custom-dot-list-style button:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Custom carousel container */
+.carousel-container .react-multi-carousel-list {
+  height: 100%;
+  overflow: hidden;
+}
+
+.carousel-container .react-multi-carousel-track {
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.carousel-item-padding-40-px {
+  height: 100% !important;
+}
+
+/* Enhanced carousel transitions */
+.carousel-container .react-multi-carousel-item {
+  transition: all 0.8s ease-in-out;
+}
+
+.carousel-container .react-multi-carousel-item--active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.carousel-container .react-multi-carousel-item--inactive {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+/* Smooth fade transition for slides */
+.carousel-container {
+  position: relative;
+}
+
+.carousel-container .react-multi-carousel-list .react-multi-carousel-track .react-multi-carousel-item {
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+/* Arrow hover effects */
+.carousel-container button:hover {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Content fade-in animations */
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 1s ease-out;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 1s ease-out;
+}
+
+/* Staggered animation for child elements */
+.animate-fade-in-left > *:nth-child(1) {
+  animation-delay: 0.1s;
+  animation-fill-mode: both;
+}
+
+.animate-fade-in-left > *:nth-child(2) {
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
+}
+
+.animate-fade-in-left > *:nth-child(3) {
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.animate-fade-in-left > *:nth-child(4) {
+  animation-delay: 0.4s;
+  animation-fill-mode: both;
+}

@@ -1,12 +1,20 @@
-import Header from './components/Header';
-import Banner from './components/Banner';
-import MovieList from './components/MovieList';
-import { useState, useEffect } from 'react'
-import MovieSearch from './components/MovieSearch';
-import { MovieProvider } from './context/MovieProvider';
-function App() {
-  const [movie, setMovie] = useState([]);
-  const [movieRate, setMovieRate] = useState([]);
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import LoginModal from "./components/LoginModal";
+import Home from "./pages/Home";
+import Movies from "./pages/Movies";
+import Series from "./pages/Series";
+import TV from "./pages/TV";
+import Sports from "./pages/Sports";
+import TVShows from "./pages/TVShows";
+import Live from "./pages/Live";
+import { MovieProvider } from "./context/MovieProvider";
+import { AuthProvider } from "./context/AuthContext";
+
+// Component con để wrap Header và Routes
+const AppContent = () => {
   const [movieSearch, setMovieSearch] = useState([]);
 
   const handleSearch = async (searchValue) => {
@@ -14,61 +22,54 @@ function App() {
     try {
       const url = `https://api.themoviedb.org/3/search/movie?query=${searchValue}&include_adult=false&language=vi&page=1`;
       const options = {
-        method: 'GET',
+        method: "GET",
         headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
-        }
-      }
+          accept: "application/json",
+          Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        },
+      };
       const searchMovie = await fetch(url, options);
       const data = await searchMovie.json();
-      setMovieSearch(data.results)
+      setMovieSearch(data.results);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-
-  useEffect(() => {
-    const fetchMovie = async () => {
-      const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
-        }
-      };
-      const url1 = 'https://api.themoviedb.org/3/movie/popular?language=vi&page=1';
-      const url2 = 'https://api.themoviedb.org/3/movie/top_rated?language=vi&page=1';
-
-      const [res1, res2] = await Promise.all([
-        fetch(url1, options),
-        fetch(url2, options)
-      ])
-      const data1 = await res1.json();
-      const data2 = await res2.json();
-
-      setMovie(data1.results);
-      setMovieRate(data2.results);
-    }
-    fetchMovie();
-  }, [])
+  };
 
   return (
-    <>
-      <MovieProvider>
-        <div className='bg-black pb-10'>
-          <Header onSearch={handleSearch} />
-          <Banner />
-          {movieSearch.length > 0 ?
-            <MovieSearch title={`kết quả tìm kiếm`} data={movieSearch} />
-            :
-            (<>
-              <MovieList title={'Phim Hot'} data={movie} />
-              <MovieList title={'Phim Đề Cử'} data={movieRate} />
-            </>)}
-        </div>
-      </MovieProvider>
-    </>
+    <div className="bg-gradient-to-br from-slate-100 via-white to-blue-50 min-h-screen">
+      <Header onSearch={handleSearch} />
+      <div className="pb-10">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home movieSearch={movieSearch} handleSearch={handleSearch} />
+            }
+          />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/series" element={<Series />} />
+          <Route path="/tv" element={<TV />} />
+          <Route path="/sports" element={<Sports />} />
+          <Route path="/tvshows" element={<TVShows />} />
+          <Route path="/live" element={<Live />} />
+        </Routes>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <MovieProvider>
+          <AppContent />
+          <LoginModal />
+        </MovieProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 
