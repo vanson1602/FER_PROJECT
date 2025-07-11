@@ -62,9 +62,12 @@ const Header = ({ onSearch }) => {
 
         <div className="flex items-center space-x-6">
           {!isAuthenticated && (
-            <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold px-6 py-2 rounded-full text-base hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-lg">
-              ĐẶC QUYỀN VIP
-            </button>
+            <Link
+              to="/animation"
+              className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold px-6 py-2 rounded-full text-base hover:from-orange-500 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              🎨 PHIM HOẠT HÌNH
+            </Link>
           )}
 
           {!isAuthenticated ? (
@@ -172,14 +175,16 @@ const Header = ({ onSearch }) => {
           >
             🔴 Trực Tiếp
           </Link>
-          {isAuthenticated && (
-            <a
-              href="#"
-              className="text-yellow-400 hover:text-yellow-300 font-semibold text-lg transition-all duration-300 transform hover:scale-110 hover:translate-y-[-2px]"
-            >
-              ⭐ VIP
-            </a>
-          )}
+          <Link
+            to="/animation"
+            className={`font-semibold text-lg transition-all duration-300 transform hover:scale-110 hover:translate-y-[-2px] ${
+              location.pathname === "/animation"
+                ? "text-green-400 border-b-2 border-green-400 pb-1"
+                : "text-white hover:text-green-400"
+            }`}
+          >
+            🎨 Phim Hoạt Hình
+          </Link>
         </div>
 
         {/* Search box */}

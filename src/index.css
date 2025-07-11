@@ -16,6 +16,198 @@ code {
     monospace;
 }
 
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom carousel dots */
+.custom-dot-list-style {
+  bottom: -30px !important;
+}
+
+.custom-dot-list-style .react-multi-carousel-dot button {
+  border: 2px solid #e5e7eb !important;
+  background: transparent !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.custom-dot-list-style .react-multi-carousel-dot--active button {
+  background: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+/* Equal height carousel items */
+.carousel-item-equal-height {
+  height: 600px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.carousel-container {
+  padding: 20px 0 !important;
+}
+
+.carousel-slider {
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+/* Carousel arrows styling */
+.react-multi-carousel-arrow {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 45px !important;
+  height: 45px !important;
+  color: white !important;
+  transition: all 0.3s ease !important;
+}
+
+.react-multi-carousel-arrow:hover {
+  background: rgba(0, 0, 0, 0.9) !important;
+  transform: scale(1.1) !important;
+}
+
+.react-multi-carousel-arrow--left {
+  left: 10px !important;
+}
+
+.react-multi-carousel-arrow--right {
+  right: 10px !important;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 768px) {
+  .react-multi-carousel-arrow {
+    display: none !important;
+  }
+}
+
+/* Loading animation improvements */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Better focus states */
+button:focus,
+input:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Hover effects for cards */
+.tv-show-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Gradient text animations */
+.gradient-text {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Modal improvements */
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(4px);
+}
+
+.ReactModal__Content {
+  background: #000 !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Genre tags styling */
+.genre-tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 2px;
+  display: inline-block;
+}
+
+/* Search highlighting */
+.search-highlight {
+  background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
 /* Custom styles for Banner carousel dots */
 .custom-dot-list-style {
   position: absolute;
