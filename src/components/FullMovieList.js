@@ -374,7 +374,7 @@ const FullMovieList = ({ selectedGenre = "all", searchTerm = "" }) => {
   });
 
   return (
-    <div className="text-gray-800 px-6 py-10 mb-10">
+    <div className="bg-gradient-to-b from-[#1a1a1a] via-[#0f0f0f] to-black text-white px-6 py-10 mb-10">
       {!isMoviesView && (
         <div className="flex items-center justify-between mb-6">
           <h2 className="uppercase text-2xl font-bold text-gray-800">

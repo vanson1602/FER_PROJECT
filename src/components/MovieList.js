@@ -46,7 +46,7 @@ const MovieList = ({ title, data }) => {
           data.map((item) => (
             <div
               key={item.id}
-              className="w-[200px] h-[300px] relative group"
+              className="w-[220px] h-[320px] relative group"
               onClick={() => handleMovieClick(item.id)}
             >
               <div

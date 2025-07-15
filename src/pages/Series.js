@@ -17,18 +17,15 @@ const Series = () => {
     { id: "family", name: "Gia đình", icon: "👨‍👩‍👧‍👦" },
   ];
 
-  // Debounce search term để tránh call API quá nhiều
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 300);
-
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
   const handleGenreClick = (genreId) => {
     setSelectedGenre(genreId);
-    // Reset search khi chọn genre
     if (genreId !== "all") {
       setSearchTerm("");
       setDebouncedSearchTerm("");
@@ -37,7 +34,6 @@ const Series = () => {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    // Reset genre filter khi search
     if (e.target.value.trim()) {
       setSelectedGenre("all");
     }
@@ -50,41 +46,41 @@ const Series = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+    <div className="min-h-screen bg-[#0f0f0f] text-white">
       <div className="pt-10">
         <div className="text-center mb-10">
-          {/* Title và Search Bar cùng hàng */}
-          <div className="flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto mb-8 gap-6">
+          {/* Title + Search */}
+          <div className="flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto mb-10 gap-6 px-4">
             {/* Title */}
-            <div className="flex-1">
-              <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-red-500 bg-clip-text text-transparent tracking-tight">
+            <div className="flex-1 text-left">
+              <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-500 to-pink-400 bg-clip-text text-transparent tracking-tight">
                 📺 PHIM BỘ
               </h1>
-              <div className="w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto lg:mx-0 rounded-full mt-2"></div>
+              <div className="w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-3"></div>
             </div>
 
-            {/* Enhanced Search Bar */}
-            <div className="flex-1 max-w-md">
+            {/* Search */}
+            <div className="flex-1 max-w-md w-full">
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Tìm kiếm phim bộ theo tên..."
+                  placeholder="🔍 Tìm kiếm phim bộ..."
                   value={searchTerm}
                   onChange={handleSearchChange}
-                  className="w-full px-6 py-4 text-lg border-2 border-gray-200 rounded-full focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white shadow-lg"
+                  className="w-full px-6 py-4 text-lg bg-[#1f1f1f] border border-gray-700 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-purple-600 placeholder-gray-400"
                 />
                 <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
                   {searchTerm && (
                     <button
                       onClick={handleClearSearch}
-                      className="text-gray-400 hover:text-red-500 transition-colors"
+                      className="text-gray-400 hover:text-red-400 transition"
                       title="Xóa tìm kiếm"
                     >
                       ✕
                     </button>
                   )}
                   <svg
-                    className="w-6 h-6 text-gray-400"
+                    className="w-6 h-6 text-purple-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -102,16 +98,16 @@ const Series = () => {
           </div>
 
           {/* Subtitle */}
-          <p className="text-gray-600 text-xl font-medium mb-8">
+          <p className="text-gray-400 text-xl font-medium mb-8">
             {debouncedSearchTerm
               ? `Kết quả tìm kiếm cho "${debouncedSearchTerm}"`
-              : "Khám phá những bộ phim truyền hình đang phát sóng"}
+              : "Khám phá những bộ phim truyền hình nổi bật, đang phát sóng"}
           </p>
 
-          {/* Genre Filter - Ẩn khi đang search */}
+          {/* Genres */}
           {!debouncedSearchTerm && (
-            <div className="max-w-6xl mx-auto mb-8">
-              <h3 className="text-lg font-semibold text-gray-700 mb-4">
+            <div className="max-w-6xl mx-auto mb-8 px-4">
+              <h3 className="text-lg font-semibold text-gray-300 mb-4">
                 🎯 Lọc theo thể loại:
               </h3>
               <div className="flex flex-wrap justify-center gap-3">
@@ -121,8 +117,8 @@ const Series = () => {
                     onClick={() => handleGenreClick(genre.id)}
                     className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${
                       selectedGenre === genre.id
-                        ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg"
-                        : "bg-white text-gray-700 border-2 border-gray-200 hover:border-purple-400 hover:bg-purple-50"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md"
+                        : "bg-[#1f1f1f] text-gray-300 border border-gray-600 hover:border-purple-400 hover:bg-[#2a2a2a]"
                     }`}
                   >
                     <span className="mr-2">{genre.icon}</span>
@@ -135,14 +131,14 @@ const Series = () => {
 
           {/* Search Info */}
           {debouncedSearchTerm && (
-            <div className="max-w-4xl mx-auto mb-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
-              <p className="text-purple-800">
-                🔍 Đang hiển thị kết quả tìm kiếm cho "
-                <strong>{debouncedSearchTerm}</strong>"
+            <div className="max-w-4xl mx-auto mb-6 p-4 bg-[#1c1c1c] border border-purple-700 rounded-lg text-gray-300">
+              <p>
+                🔍 Đang hiển thị kết quả tìm kiếm cho{" "}
+                <strong className="text-white">"{debouncedSearchTerm}"</strong>
               </p>
               <button
                 onClick={handleClearSearch}
-                className="mt-2 text-purple-600 hover:text-purple-800 underline"
+                className="mt-2 text-purple-400 hover:text-purple-300 underline"
               >
                 Xem tất cả phim bộ
               </button>
@@ -150,6 +146,7 @@ const Series = () => {
           )}
         </div>
 
+        {/* Series List */}
         <SeriesList
           selectedGenre={selectedGenre}
           searchTerm={debouncedSearchTerm}

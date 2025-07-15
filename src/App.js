@@ -38,7 +38,7 @@ const AppContent = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-slate-100 via-white to-blue-50 min-h-screen">
+    <div className="bg-gradient-to-br from-[#0d0d0d] via-[#1a1a1a] to-[#0f0f0f] min-h-screen text-white">
       <Header onSearch={handleSearch} />
       <div className="pb-10">
         <Routes>
