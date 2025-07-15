@@ -1,3 +1,339 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom carousel dots */
+.custom-dot-list-style {
+  bottom: -30px !important;
+}
+
+.custom-dot-list-style .react-multi-carousel-dot button {
+  border: 2px solid #e5e7eb !important;
+  background: transparent !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.custom-dot-list-style .react-multi-carousel-dot--active button {
+  background: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+/* Equal height carousel items */
+.carousel-item-equal-height {
+  height: 600px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.carousel-container {
+  padding: 20px 0 !important;
+}
+
+.carousel-slider {
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+/* Carousel arrows styling */
+.react-multi-carousel-arrow {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 45px !important;
+  height: 45px !important;
+  color: white !important;
+  transition: all 0.3s ease !important;
+}
+
+.react-multi-carousel-arrow:hover {
+  background: rgba(0, 0, 0, 0.9) !important;
+  transform: scale(1.1) !important;
+}
+
+.react-multi-carousel-arrow--left {
+  left: 10px !important;
+}
+
+.react-multi-carousel-arrow--right {
+  right: 10px !important;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 768px) {
+  .react-multi-carousel-arrow {
+    display: none !important;
+  }
+}
+
+/* Loading animation improvements */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Better focus states */
+button:focus,
+input:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Hover effects for cards */
+.tv-show-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Gradient text animations */
+.gradient-text {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Modal improvements */
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(4px);
+}
+
+.ReactModal__Content {
+  background: #000 !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Genre tags styling */
+.genre-tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 2px;
+  display: inline-block;
+}
+
+/* Search highlighting */
+.search-highlight {
+  background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+/* Custom styles for Banner carousel dots */
+.custom-dot-list-style {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 30;
+}
+
+.custom-dot-list-style button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-dot-list-style button.react-multi-carousel-dot--active {
+  background: #10b981;
+  border-color: #10b981;
+  transform: scale(1.2);
+}
+
+.custom-dot-list-style button:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Custom carousel container */
+.carousel-container .react-multi-carousel-list {
+  height: 100%;
+  overflow: hidden;
+}
+
+.carousel-container .react-multi-carousel-track {
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.carousel-item-padding-40-px {
+  height: 100% !important;
+}
+
+/* Enhanced carousel transitions */
+.carousel-container .react-multi-carousel-item {
+  transition: all 0.8s ease-in-out;
+}
+
+.carousel-container .react-multi-carousel-item--active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.carousel-container .react-multi-carousel-item--inactive {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+/* Smooth fade transition for slides */
+.carousel-container {
+  position: relative;
+}
+
+.carousel-container .react-multi-carousel-list .react-multi-carousel-track .react-multi-carousel-item {
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+/* Arrow hover effects */
+.carousel-container button:hover {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Content fade-in animations */
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 1s ease-out;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 1s ease-out;
+}
+
+/* Staggered animation for child elements */
+.animate-fade-in-left > *:nth-child(1) {
+  animation-delay: 0.1s;
+  animation-fill-mode: both;
+}
+
+.animate-fade-in-left > *:nth-child(2) {
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
+}
+
+.animate-fade-in-left > *:nth-child(3) {
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.animate-fade-in-left > *:nth-child(4) {
+  animation-delay: 0.4s;
+  animation-fill-mode: both;
+}
