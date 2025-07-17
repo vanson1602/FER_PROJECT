@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Modal from "react-modal";
+import UserManagement from "./UserManagement";
 
 const Header = ({ onSearch }) => {
   const [textSearch, setTextSearch] = useState("");
@@ -9,6 +10,7 @@ const Header = ({ onSearch }) => {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showWatchedModal, setShowWatchedModal] = useState(false);
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
+  const [showUserManagement, setShowUserManagement] = useState(false);
   const [avatar, setAvatar] = useState(() => {
     // Initialize avatar from localStorage
     const savedUser = localStorage.getItem("user");
@@ -24,6 +26,7 @@ const Header = ({ onSearch }) => {
   const fileInputRef = useRef(null);
   const { isAuthenticated, user, openLoginModal, logout } = useAuth();
   const location = useLocation();
+  const isAdmin = user?.role === "admin";
 
   // Mock data for watched and favorite movies
   const watchedMovies = [
@@ -248,67 +251,67 @@ const Header = ({ onSearch }) => {
           Movie<span className="ml-1 text-green-400 animate-pulse">•</span>Home
         </div>
 
-        {/* Main Menu */}
-        <nav className="hidden md:flex items-center space-x-8">
+        {/* Main Navigation */}
+        <nav className="hidden md:flex items-center space-x-6">
           <Link
             to="/"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+            className={`text-lg flex items-center space-x-2 ${
+              location.pathname === "/" ? "text-green-400" : "text-gray-300"
+            } hover:text-green-400 transition-colors`}
           >
-            🏠 Trang chủ
-          </Link>
-          <Link
-            to="/series"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/series"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
-          >
-            📺 Phim Bộ
+            <span>🏠</span>
+            <span>Trang chủ</span>
           </Link>
           <Link
             to="/movies"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
+            className={`text-lg flex items-center space-x-2 ${
               location.pathname === "/movies"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+                ? "text-green-400"
+                : "text-gray-300"
+            } hover:text-green-400 transition-colors`}
           >
-            🎬 Phim Điện Ảnh
+            <span>🎬</span>
+            <span>Phim điện ảnh</span>
           </Link>
           <Link
-            to="/tvshows"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/tvshows"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+            to="/series"
+            className={`text-lg flex items-center space-x-2 ${
+              location.pathname === "/series"
+                ? "text-green-400"
+                : "text-gray-300"
+            } hover:text-green-400 transition-colors`}
           >
-            🎭 TV Show
+            <span>📺</span>
+            <span>Phim bộ</span>
           </Link>
           <Link
-            to="/live"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/live"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+            to="/tv"
+            className={`text-lg flex items-center space-x-2 ${
+              location.pathname === "/tv" ? "text-green-400" : "text-gray-300"
+            } hover:text-green-400 transition-colors`}
           >
-            🔴 Trực Tiếp
+            <span>📻</span>
+            <span>TV Show</span>
           </Link>
           <Link
             to="/animation"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
+            className={`text-lg flex items-center space-x-2 ${
               location.pathname === "/animation"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+                ? "text-green-400"
+                : "text-gray-300"
+            } hover:text-green-400 transition-colors`}
           >
-            🎨 Phim Hoạt Hình
+            <span>🎨</span>
+            <span>Phim Hoạt Hình</span>
+          </Link>
+          <Link
+            to="/vip"
+            className={`text-lg flex items-center space-x-2 ${
+              location.pathname === "/vip" ? "text-green-400" : "text-gray-300"
+            } hover:text-green-400 transition-colors font-bold`}
+          >
+            <span>🌟</span>
+            <span>VIP Movies</span>
           </Link>
         </nav>
 
@@ -379,6 +382,17 @@ const Header = ({ onSearch }) => {
                   >
                     ❤️ Phim yêu thích
                   </button>
+                  {isAdmin && (
+                    <button
+                      onClick={() => {
+                        setShowUserManagement(true);
+                        setShowUserMenu(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors"
+                    >
+                      👥 Quản lý người dùng
+                    </button>
+                  )}
                   <button className="block w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors">
                     📝 Đánh giá của tôi
                   </button>
@@ -690,6 +704,12 @@ const Header = ({ onSearch }) => {
           )}
         </div>
       </Modal>
+
+      {/* User Management Modal */}
+      <UserManagement
+        isOpen={showUserManagement}
+        onClose={() => setShowUserManagement(false)}
+      />
     </header>
   );
 };

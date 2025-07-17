@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -14,32 +15,57 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Đăng nhập (demo - trong thực tế sẽ gọi API)
-  const login = (userData) => {
-    // Ensure userData has avatar field, even if null
-    const userWithAvatar = {
-      ...userData,
-      avatar: userData.avatar || null,
-    };
+  // Login with json-server
+  const login = async (credentials) => {
+    try {
+      setError(null);
+      // Get users from json-server
+      const response = await axios.get("http://localhost:3001/users");
+      const users = response.data;
 
-    setIsAuthenticated(true);
-    setUser(userWithAvatar);
-    setShowLoginModal(false);
-    // Lưu vào localStorage để persist qua session
-    localStorage.setItem("user", JSON.stringify(userWithAvatar));
-    localStorage.setItem("isAuthenticated", "true");
+      // Find matching user
+      const user = users.find(
+        (u) =>
+          u.username === credentials.username &&
+          u.password === credentials.password
+      );
+
+      if (user) {
+        const userWithAvatar = {
+          ...user,
+          avatar: user.avatar || null,
+        };
+
+        setIsAuthenticated(true);
+        setUser(userWithAvatar);
+        setShowLoginModal(false);
+        // Save to localStorage
+        localStorage.setItem("user", JSON.stringify(userWithAvatar));
+        localStorage.setItem("isAuthenticated", "true");
+        return true;
+      } else {
+        setError("Invalid username or password");
+        return false;
+      }
+    } catch (err) {
+      setError("Login failed. Please try again.");
+      console.error("Login error:", err);
+      return false;
+    }
   };
 
-  // Đăng xuất
+  // Logout
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
+    setError(null);
     localStorage.removeItem("user");
     localStorage.removeItem("isAuthenticated");
   };
 
-  // Kiểm tra đăng nhập khi load trang
+  // Check login on page load
   React.useEffect(() => {
     const savedAuth = localStorage.getItem("isAuthenticated");
     const savedUser = localStorage.getItem("user");
@@ -54,14 +80,16 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Hiển thị modal đăng nhập
+  // Show login modal
   const openLoginModal = () => {
     setShowLoginModal(true);
+    setError(null);
   };
 
-  // Đóng modal đăng nhập
+  // Close login modal
   const closeLoginModal = () => {
     setShowLoginModal(false);
+    setError(null);
   };
 
   const value = {
@@ -72,6 +100,7 @@ export const AuthProvider = ({ children }) => {
     showLoginModal,
     openLoginModal,
     closeLoginModal,
+    error,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
