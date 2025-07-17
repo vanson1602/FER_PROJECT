@@ -81,11 +81,10 @@ const Movies = () => {
                 <button
                   key={genre.id}
                   onClick={() => handleGenreClick(genre.id)}
-                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${
-                    selectedGenre === genre.id
-                      ? "bg-gradient-to-r from-purple-500 to-cyan-400 text-white shadow-md"
-                      : "bg-[#1F1F1F] text-gray-300 border border-gray-600 hover:border-purple-400 hover:bg-[#2a2a2a]"
-                  }`}
+                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${selectedGenre === genre.id
+                    ? "bg-gradient-to-r from-purple-500 to-cyan-400 text-white shadow-md"
+                    : "bg-[#1F1F1F] text-gray-300 border border-gray-600 hover:border-purple-400 hover:bg-[#2a2a2a]"
+                    }`}
                 >
                   <span className="mr-2">{genre.icon}</span>
                   {genre.name}

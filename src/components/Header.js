@@ -22,7 +22,7 @@ const Header = ({ onSearch }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const fileInputRef = useRef(null);
-  const { isAuthenticated, user, openLoginModal, logout } = useAuth();
+  const { isAuthenticated, user, openLoginModal, logout, isAdmin } = useAuth();
   const location = useLocation();
 
   // Mock data for watched and favorite movies
@@ -240,7 +240,7 @@ const Header = ({ onSearch }) => {
   );
 
   return (
-    <header className="bg-[#111] shadow-lg w-full">
+    <header className="bg-[#141414] text-white shadow-lg">
       {/* TOP: Logo - Menu - Auth */}
       <div className="flex items-center justify-between px-8 py-4 border-b border-[#2c2c2c]">
         {/* Logo */}
@@ -252,63 +252,66 @@ const Header = ({ onSearch }) => {
         <nav className="hidden md:flex items-center space-x-8">
           <Link
             to="/"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+            className={`text-lg font-medium transition-all hover:scale-110 ${location.pathname === "/"
+              ? "text-green-400 border-b-2 border-green-400 pb-1"
+              : "text-white hover:text-green-400"
+              }`}
           >
             🏠 Trang chủ
           </Link>
           <Link
             to="/series"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/series"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+            className={`text-lg font-medium transition-all hover:scale-110 ${location.pathname === "/series"
+              ? "text-green-400 border-b-2 border-green-400 pb-1"
+              : "text-white hover:text-green-400"
+              }`}
           >
             📺 Phim Bộ
           </Link>
           <Link
             to="/movies"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/movies"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+            className={`text-lg font-medium transition-all hover:scale-110 ${location.pathname === "/movies"
+              ? "text-green-400 border-b-2 border-green-400 pb-1"
+              : "text-white hover:text-green-400"
+              }`}
           >
             🎬 Phim Điện Ảnh
           </Link>
           <Link
             to="/tvshows"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/tvshows"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+            className={`text-lg font-medium transition-all hover:scale-110 ${location.pathname === "/tvshows"
+              ? "text-green-400 border-b-2 border-green-400 pb-1"
+              : "text-white hover:text-green-400"
+              }`}
           >
             🎭 TV Show
           </Link>
           <Link
             to="/live"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/live"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+            className={`text-lg font-medium transition-all hover:scale-110 ${location.pathname === "/live"
+              ? "text-green-400 border-b-2 border-green-400 pb-1"
+              : "text-white hover:text-green-400"
+              }`}
           >
             🔴 Trực Tiếp
           </Link>
           <Link
             to="/animation"
-            className={`text-lg font-medium transition-all hover:scale-110 ${
-              location.pathname === "/animation"
-                ? "text-green-400 border-b-2 border-green-400 pb-1"
-                : "text-white hover:text-green-400"
-            }`}
+            className={`text-lg font-medium transition-all hover:scale-110 ${location.pathname === "/animation"
+              ? "text-green-400 border-b-2 border-green-400 pb-1"
+              : "text-white hover:text-green-400"
+              }`}
           >
             🎨 Phim Hoạt Hình
+          </Link>
+          <Link
+            to="/vip"
+            className={`text-lg font-medium transition-all hover:scale-110 ${location.pathname === "/vip"
+              ? "text-green-400 border-b-2 border-green-400 pb-1"
+              : "text-white hover:text-green-400"
+              }`}
+          >
+            👑 VIP
           </Link>
         </nav>
 
@@ -327,67 +330,61 @@ const Header = ({ onSearch }) => {
             <div className="relative flex items-center space-x-3">
               <span className="text-green-400 font-medium text-sm hidden sm:inline">
                 Xin chào, {user?.username}
+                {isAdmin && <span className="ml-1 text-yellow-400">(Admin)</span>}
               </span>
               <button
                 onClick={handleUserMenuToggle}
-                className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-orange-500 text-white font-bold text-lg shadow-md hover:scale-110 transition flex items-center justify-center"
+                className={`w-10 h-10 rounded-full text-white font-bold text-lg shadow-md hover:scale-110 transition flex items-center justify-center ${isAdmin
+                  ? "bg-gradient-to-r from-yellow-400 to-yellow-500"
+                  : "bg-gradient-to-r from-orange-400 to-orange-500"
+                  }`}
               >
                 {user?.username?.charAt(0)?.toUpperCase() || "U"}
               </button>
 
               {showUserMenu && (
-                <div className="absolute right-0 mt-16 w-64 bg-[#1e1e1e] rounded-lg shadow-xl border border-[#333] z-50 text-white text-sm py-2 transform origin-top transition-transform duration-200">
-                  <div className="px-4 py-3 border-b border-[#333] flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden">
-                      {avatar ? (
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-r from-orange-400 to-orange-500 flex items-center justify-center text-white font-bold">
-                          {user?.username?.charAt(0)?.toUpperCase() || "U"}
-                        </div>
-                      )}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-green-400">
-                        {user?.username}
-                      </div>
-                      <div className="text-gray-400 text-xs">{user?.email}</div>
-                    </div>
-                  </div>
+                <div className="absolute right-0 mt-2 w-48 bg-[#1e1e1e] rounded-lg shadow-xl border border-[#333] py-2 z-50">
                   <button
                     onClick={handleOpenProfile}
-                    className="block w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors"
                   >
-                    👤 Thông tin cá nhân
-                  </button>
-                  <button className="block w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors">
-                    ⚙️ Cài đặt tài khoản
+                    Hồ sơ
                   </button>
                   <button
                     onClick={handleOpenWatched}
-                    className="block w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors"
                   >
-                    🎬 Phim đã xem
+                    Đã xem
                   </button>
                   <button
                     onClick={handleOpenFavorites}
-                    className="block w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors"
                   >
-                    ❤️ Phim yêu thích
+                    Yêu thích
                   </button>
-                  <button className="block w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors">
-                    📝 Đánh giá của tôi
-                  </button>
-                  <hr className="border-[#444] my-1" />
+                  {isAdmin && (
+                    <>
+                      <div className="border-t border-[#333] my-2"></div>
+                      <Link
+                        to="/admin/movies"
+                        className="block px-4 py-2 hover:bg-[#2c2c2c] transition-colors text-green-400"
+                      >
+                        Quản lý phim
+                      </Link>
+                      <Link
+                        to="/admin/users"
+                        className="block px-4 py-2 hover:bg-[#2c2c2c] transition-colors text-green-400"
+                      >
+                        Quản lý người dùng
+                      </Link>
+                    </>
+                  )}
+                  <div className="border-t border-[#333] my-2"></div>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 text-red-400 hover:bg-[#2c2c2c] transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-[#2c2c2c] text-red-500 transition-colors"
                   >
-                    🚪 Đăng xuất
+                    Đăng xuất
                   </button>
                 </div>
               )}
@@ -456,9 +453,8 @@ const Header = ({ onSearch }) => {
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <div
-                  className={`w-24 h-24 rounded-full overflow-hidden ${
-                    isEditing ? "cursor-pointer group" : ""
-                  }`}
+                  className={`w-24 h-24 rounded-full overflow-hidden ${isEditing ? "cursor-pointer group" : ""
+                    }`}
                   onClick={handleAvatarClick}
                 >
                   {(isEditing ? tempAvatar : avatar) ? (
@@ -578,9 +574,8 @@ const Header = ({ onSearch }) => {
                   <button
                     onClick={handleSaveProfile}
                     disabled={isSaving}
-                    className={`px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2 ${
-                      isSaving ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
+                    className={`px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2 ${isSaving ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                   >
                     {isSaving ? (
                       <>

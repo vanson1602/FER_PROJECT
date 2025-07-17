@@ -3,12 +3,11 @@ import Modal from "react-modal";
 import { useAuth } from "../context/AuthContext";
 
 const LoginModal = () => {
-  const { showLoginModal, closeLoginModal, login } = useAuth();
+  const { showLoginModal, closeLoginModal, login, loginError, isLoading } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,23 +19,12 @@ const LoginModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // Simulate API call (demo - trong thực tế sẽ gọi API thật)
-    setTimeout(() => {
-      if (formData.username && formData.password) {
-        // Mock successful login
-        const userData = {
-          id: 1,
-          username: formData.username,
-          email: `${formData.username}@example.com`,
-          avatar: "A",
-        };
-        login(userData);
-        setFormData({ username: "", password: "" });
-      }
-      setIsLoading(false);
-    }, 1000);
+    if (!formData.username || !formData.password) {
+      return;
+    }
+
+    await login(formData);
   };
 
   return (
@@ -76,6 +64,12 @@ const LoginModal = () => {
           <h2 className="text-3xl font-bold text-white mb-2">Đăng nhập</h2>
           <p className="text-gray-400">Đăng nhập để xem phim đầy đủ</p>
         </div>
+
+        {loginError && (
+          <div className="bg-red-900/50 border border-red-500 text-red-200 px-4 py-2 rounded-lg mb-4">
+            {loginError}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -144,6 +138,11 @@ const LoginModal = () => {
               Đăng ký ngay
             </button>
           </p>
+          <div className="mt-4 text-xs text-gray-500">
+            <p>Đăng nhập với tài khoản:</p>
+            <p>- User: username: user / password: user123</p>
+            <p>- Admin: username: admin / password: admin123</p>
+          </div>
         </div>
 
         <button
