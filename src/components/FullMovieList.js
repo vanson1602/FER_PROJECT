@@ -577,31 +577,31 @@ const MovieCard = ({ movie, onClick, isAuthenticated, isMoviesView }) => {
 
         {/* Thông tin phim */}
         <div
-          className={`bg-white shadow-lg border border-gray-200 p-4 rounded-b-lg ${
+          className={`bg-gray-900 shadow-lg border border-gray-700 p-4 rounded-b-lg ${
             isMoviesView ? "h-[240px]" : "h-[220px]"
           } flex flex-col`}
         >
-          <h3 className="text-gray-800 text-lg font-bold mb-2 line-clamp-2">
+          <h3 className="text-gray-100 text-lg font-bold mb-2 line-clamp-2">
             {movie.title}
           </h3>
 
           <div className="flex items-center mb-2 text-sm">
             <span className="text-yellow-500">⭐</span>
-            <span className="text-gray-700 ml-1 font-semibold">
+            <span className="text-gray-300 ml-1 font-semibold">
               {movie.rating}/10
             </span>
-            <span className="text-gray-400 mx-2">•</span>
-            <span className="text-gray-600">{movie.year}</span>
+            <span className="text-gray-600 mx-2">•</span>
+            <span className="text-gray-400">{movie.year}</span>
           </div>
 
           <div className="mb-2">
-            <span className="text-blue-600 text-xs bg-blue-100 px-2 py-1 rounded mr-2 font-semibold">
+            <span className="text-blue-300 text-xs bg-blue-900 px-2 py-1 rounded mr-2 font-semibold">
               {movie.genre}
             </span>
-            <span className="text-gray-500 text-xs">{movie.duration}</span>
+            <span className="text-gray-400 text-xs">{movie.duration}</span>
           </div>
 
-          <p className="text-gray-600 text-sm line-clamp-3 flex-1">
+          <p className="text-gray-400 text-sm line-clamp-3 flex-1">
             {movie.description}
           </p>
 
@@ -609,7 +609,7 @@ const MovieCard = ({ movie, onClick, isAuthenticated, isMoviesView }) => {
             className={`mt-3 w-full py-2 rounded-lg font-semibold transition-all duration-300 ${
               isAuthenticated
                 ? "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg"
-                : "bg-gradient-to-r from-gray-300 to-gray-400 hover:from-gray-400 hover:to-gray-500 text-gray-700"
+                : "bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-gray-300"
             }`}
           >
             {isAuthenticated ? "▶ Xem ngay" : "🔒 Cần đăng nhập"}

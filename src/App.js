@@ -19,7 +19,14 @@ const AppContent = () => {
   const [movieSearch, setMovieSearch] = useState([]);
 
   const handleSearch = async (searchValue) => {
+    // Reset search results
     setMovieSearch([]);
+
+    // If search value is empty, return early
+    if (!searchValue.trim()) {
+      return;
+    }
+
     try {
       const url = `https://api.themoviedb.org/3/search/movie?query=${searchValue}&include_adult=false&language=vi&page=1`;
       const options = {
@@ -31,9 +38,16 @@ const AppContent = () => {
       };
       const searchMovie = await fetch(url, options);
       const data = await searchMovie.json();
-      setMovieSearch(data.results);
+
+      // Only set results if we actually found movies
+      if (data.results && Array.isArray(data.results)) {
+        setMovieSearch(data.results);
+      } else {
+        setMovieSearch([]);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error searching movies:", error);
+      setMovieSearch([]);
     }
   };
 
