@@ -17,11 +17,17 @@ export const AuthProvider = ({ children }) => {
 
   // Đăng nhập (demo - trong thực tế sẽ gọi API)
   const login = (userData) => {
+    // Ensure userData has avatar field, even if null
+    const userWithAvatar = {
+      ...userData,
+      avatar: userData.avatar || null,
+    };
+
     setIsAuthenticated(true);
-    setUser(userData);
+    setUser(userWithAvatar);
     setShowLoginModal(false);
     // Lưu vào localStorage để persist qua session
-    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("user", JSON.stringify(userWithAvatar));
     localStorage.setItem("isAuthenticated", "true");
   };
 
@@ -39,8 +45,12 @@ export const AuthProvider = ({ children }) => {
     const savedUser = localStorage.getItem("user");
 
     if (savedAuth === "true" && savedUser) {
+      const userData = JSON.parse(savedUser);
       setIsAuthenticated(true);
-      setUser(JSON.parse(savedUser));
+      setUser({
+        ...userData,
+        avatar: userData.avatar || null,
+      });
     }
   }, []);
 

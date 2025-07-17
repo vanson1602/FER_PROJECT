@@ -180,16 +180,16 @@ const TVShowList = ({ selectedGenre = "all", searchTerm = "" }) => {
 
   if (loading) {
     return (
-      <div className="text-center py-20">
+      <div className="text-center py-20 bg-[#1a1a1a]">
         <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        <p className="mt-4 text-gray-600">Đang tải TV shows...</p>
+        <p className="mt-4 text-blue-400">Đang tải TV shows...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-20">
+      <div className="text-center py-20 bg-[#1a1a1a]">
         <div className="text-red-500 text-xl">❌ Lỗi: {error}</div>
         <button
           onClick={fetchTVShows}
@@ -201,22 +201,24 @@ const TVShowList = ({ selectedGenre = "all", searchTerm = "" }) => {
     );
   }
 
-  if (filteredTVShows.length === 0) {
+  if (!tvShows || tvShows.length === 0) {
     return (
-      <div className="text-center py-20">
-        <div className="text-gray-500 text-xl">
+      <div className="text-center py-20 bg-[#1a1a1a]">
+        <div className="text-6xl mb-4">📺</div>
+        <h3 className="text-2xl font-bold text-blue-400 mb-2">
+          Không tìm thấy TV Show
+        </h3>
+        <p className="text-gray-400">
           {searchTerm
-            ? `Không tìm thấy TV show nào với từ khóa "${searchTerm}"`
-            : "Không có TV show nào"}
-        </div>
-        {searchTerm && (
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            Xem tất cả TV shows
-          </button>
-        )}
+            ? `Không có TV Show nào phù hợp với "${searchTerm}"`
+            : "Không có TV Show nào trong thể loại này"}
+        </p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+        >
+          Xem tất cả TV Show
+        </button>
       </div>
     );
   }
@@ -291,8 +293,8 @@ const TVShowCard = ({ show, allGenres }) => {
 
   return (
     <div className="mx-2 mb-8 h-full">
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer group h-full flex flex-col">
-        {/* Poster Image - Fixed Height */}
+      <div className="bg-[#0f1117] rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer group h-full flex flex-col">
+        {/* Poster Image */}
         <div className="relative overflow-hidden flex-shrink-0">
           <img
             src={posterUrl}
@@ -306,16 +308,16 @@ const TVShowCard = ({ show, allGenres }) => {
           />
 
           {/* Rating Badge */}
-          <div className="absolute top-3 right-3 bg-black bg-opacity-80 text-white px-2 py-1 rounded-full text-sm font-bold">
-            ⭐ {show.vote_average?.toFixed(1)}
+          <div className="absolute top-3 right-3 bg-[#0f1117]/80 text-yellow-400 px-2 py-1 rounded text-sm font-bold flex items-center gap-1">
+            <span>⭐</span> {show.vote_average?.toFixed(1)}/10
           </div>
 
           {/* Play Button Overlay */}
           <div
-            className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             onClick={handleClick}
           >
-            <div className="bg-red-500 rounded-full p-4 transform scale-75 group-hover:scale-100 transition-transform duration-300 hover:bg-red-600">
+            <div className="bg-red-600 rounded-full p-4 transform scale-75 group-hover:scale-100 transition-transform duration-300 hover:bg-red-700">
               <svg
                 className="w-8 h-8 text-white"
                 fill="currentColor"
@@ -327,58 +329,52 @@ const TVShowCard = ({ show, allGenres }) => {
           </div>
         </div>
 
-        {/* Content - Flexible Layout */}
+        {/* Content */}
         <div className="p-4 flex flex-col flex-grow">
-          {/* Title - Fixed Height */}
-          <div className="h-14 mb-2">
-            <h3 className="font-bold text-lg text-gray-800 line-clamp-2 group-hover:text-blue-600 transition-colors leading-tight">
+          {/* Title */}
+          <div className="mb-2">
+            <h3 className="font-bold text-lg text-white group-hover:text-red-500 transition-colors leading-tight">
               {show.name}
             </h3>
           </div>
 
-          {/* Description - Fixed Height */}
-          <div className="h-16 mb-3">
-            <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
-              {show.overview || "Không có mô tả"}
-            </p>
-          </div>
-
-          {/* Genres - Fixed Height */}
-          <div className="h-8 mb-3 flex items-start">
-            {genres.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                {genres.map((genre, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full leading-none"
-                  >
-                    {genre}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Info Row - Fixed Height */}
-          <div className="flex items-center justify-between text-sm text-gray-500 mb-4 h-5">
-            <span>
-              📅{" "}
+          {/* Year & Duration */}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-gray-400 text-sm">
               {show.first_air_date
                 ? new Date(show.first_air_date).getFullYear()
                 : "N/A"}
             </span>
-            <span>👥 {show.popularity?.toFixed(0)}</span>
+            <span className="text-gray-400">•</span>
+            <span className="text-gray-400 text-sm">
+              {show.number_of_episodes || "?"} tập
+            </span>
           </div>
 
-          {/* Watch Trailer Button - Push to bottom */}
-          <div className="mt-auto">
-            <button
-              onClick={handleClick}
-              className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 font-semibold text-sm"
-            >
-              🎬 Xem Trailer
-            </button>
+          {/* Genres */}
+          <div className="flex flex-wrap gap-1 mb-2">
+            {genres.map((genre, index) => (
+              <span
+                key={index}
+                className="px-2 py-0.5 bg-[#1f2937] text-gray-300 text-xs rounded"
+              >
+                {genre}
+              </span>
+            ))}
           </div>
+
+          {/* Description */}
+          <p className="text-gray-400 text-sm line-clamp-3 mb-4">
+            {show.overview || "Không có mô tả"}
+          </p>
+
+          {/* Watch Button */}
+          <button
+            onClick={handleClick}
+            className="w-full bg-red-600 text-white py-3 rounded hover:bg-red-700 transition-all duration-300 font-semibold text-sm mt-auto"
+          >
+            ▶ Xem ngay
+          </button>
         </div>
       </div>
     </div>
