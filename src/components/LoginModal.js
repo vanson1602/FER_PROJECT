@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { useAuth } from "../context/AuthContext";
 
 const LoginModal = () => {
-  const { showLoginModal, closeLoginModal, login } = useAuth();
+  const { showLoginModal, closeLoginModal, login, error } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -22,21 +22,16 @@ const LoginModal = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call (demo - trong thực tế sẽ gọi API thật)
-    setTimeout(() => {
-      if (formData.username && formData.password) {
-        // Mock successful login
-        const userData = {
-          id: 1,
-          username: formData.username,
-          email: `${formData.username}@example.com`,
-          avatar: "A",
-        };
-        login(userData);
+    try {
+      const success = await login(formData);
+      if (success) {
         setFormData({ username: "", password: "" });
       }
+    } catch (err) {
+      console.error("Login error:", err);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -78,6 +73,15 @@ const LoginModal = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div
+              className="bg-red-500 bg-opacity-10 border border-red-500 text-red-500 px-4 py-3 rounded relative"
+              role="alert"
+            >
+              <span className="block sm:inline">{error}</span>
+            </div>
+          )}
+
           <div>
             <label className="block text-white text-sm font-bold mb-2">
               Tên đăng nhập

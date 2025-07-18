@@ -8,12 +8,13 @@ const TVShows = () => {
 
   const genres = [
     { id: "all", name: "Tất cả", icon: "📺" },
-    { id: "comedy", name: "Hài hước", icon: "😂" },
     { id: "drama", name: "Tâm lý", icon: "🎭" },
+    { id: "comedy", name: "Hài hước", icon: "😂" },
     { id: "action", name: "Hành động", icon: "💥" },
-    { id: "romance", name: "Tình cảm", icon: "💕" },
     { id: "crime", name: "Tội phạm", icon: "🕵️" },
     { id: "reality", name: "Thực tế", icon: "🎪" },
+    { id: "romance", name: "Tình cảm", icon: "💕" },
+    { id: "documentary", name: "Tài liệu", icon: "📚" },
   ];
 
   useEffect(() => {
@@ -45,15 +46,15 @@ const TVShows = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0e0e1a] text-white">
+    <div className="min-h-screen bg-[#0f0f0f] text-white">
       <div className="pt-10">
         <div className="text-center mb-10">
-          {/* Header */}
+          {/* Title + Search */}
           <div className="flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto mb-10 gap-6 px-4">
             {/* Title */}
             <div className="flex-1 text-left">
               <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 bg-clip-text text-transparent tracking-tight">
-                🎭 TV SHOW
+                📺 TV SHOW
               </h1>
               <div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mt-3"></div>
             </div>
@@ -66,7 +67,7 @@ const TVShows = () => {
                   placeholder="🔍 Tìm kiếm TV show..."
                   value={searchTerm}
                   onChange={handleSearchChange}
-                  className="w-full px-6 py-4 text-lg bg-[#1c1c2a] text-white border border-gray-600 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full px-6 py-4 text-lg bg-[#1f1f1f] border border-gray-700 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 placeholder-gray-400"
                 />
                 <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
                   {searchTerm && (
@@ -97,13 +98,13 @@ const TVShows = () => {
           </div>
 
           {/* Subtitle */}
-          <p className="text-gray-300 text-xl font-medium mb-8">
+          <p className="text-gray-400 text-xl font-medium mb-8">
             {debouncedSearchTerm
               ? `Kết quả tìm kiếm cho "${debouncedSearchTerm}"`
               : "Khám phá những chương trình truyền hình nổi bật và hấp dẫn nhất"}
           </p>
 
-          {/* Genre Filter */}
+          {/* Genres */}
           {!debouncedSearchTerm && (
             <div className="max-w-6xl mx-auto mb-8 px-4">
               <h3 className="text-lg font-semibold text-gray-300 mb-4">
@@ -117,7 +118,7 @@ const TVShows = () => {
                     className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${
                       selectedGenre === genre.id
                         ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
-                        : "bg-[#1c1c2a] text-gray-300 border border-gray-600 hover:border-blue-500 hover:bg-[#2a2a3a]"
+                        : "bg-[#1f1f1f] text-gray-300 border border-gray-600 hover:border-blue-400 hover:bg-[#2a2a2a]"
                     }`}
                   >
                     <span className="mr-2">{genre.icon}</span>
@@ -128,9 +129,9 @@ const TVShows = () => {
             </div>
           )}
 
-          {/* Search Result Info */}
+          {/* Search Info */}
           {debouncedSearchTerm && (
-            <div className="max-w-4xl mx-auto mb-6 p-4 bg-[#1f1f2e] border border-blue-500 rounded-lg text-gray-200">
+            <div className="max-w-4xl mx-auto mb-6 p-4 bg-[#1c1c1c] border border-blue-700 rounded-lg text-gray-300">
               <p>
                 🔍 Đang hiển thị kết quả tìm kiếm cho{" "}
                 <strong className="text-white">"{debouncedSearchTerm}"</strong>
@@ -145,7 +146,7 @@ const TVShows = () => {
           )}
         </div>
 
-        {/* List */}
+        {/* TV Show List */}
         <TVShowList
           selectedGenre={selectedGenre}
           searchTerm={debouncedSearchTerm}
