@@ -92,10 +92,15 @@ const Banner = () => {
         const data = await response.json();
 
         // Chỉ lấy 5 phim đầu để làm banner
-        setBannerMovies(data.results.slice(0, 5));
+        if (data.results && Array.isArray(data.results)) {
+          setBannerMovies(data.results.slice(0, 5));
+        } else {
+          setBannerMovies([]);
+        }
         setLoading(false);
       } catch (error) {
         console.log("Error fetching banner movies:", error);
+        setBannerMovies([]);
         setLoading(false);
       }
     };
@@ -138,10 +143,13 @@ const Banner = () => {
     return stars;
   };
 
-  if (loading) {
+  // Add early return if bannerMovies is empty
+  if (loading || !bannerMovies || bannerMovies.length === 0) {
     return (
       <div className="w-full h-[600px] bg-black flex items-center justify-center">
-        <div className="text-white text-xl">Đang tải...</div>
+        <div className="text-white text-xl">
+          {loading ? "Đang tải..." : "Không có phim để hiển thị"}
+        </div>
       </div>
     );
   }

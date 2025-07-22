@@ -368,29 +368,115 @@ const TVShowList = ({ selectedGenre = "all", searchTerm = "" }) => {
           )}
         </div>
       </div>
+      {/* Carousel */}
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray-600 text-xl">Đang tải...</div>
+        </div>
+      ) : !filteredTVShows || filteredTVShows.length === 0 ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray-600 text-xl">Không tìm thấy chương trình nào</div>
+        </div>
+      ) : (
+        <Carousel
+          responsive={responsive}
+          infinite={true}
+          autoPlay={!searchTerm} // Không auto play khi đang search
+          autoPlaySpeed={4000}
+          keyBoardControl={true}
+          customTransition="all .5s"
+          transitionDuration={500}
+          containerClass="carousel-container"
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          dotListClass="custom-dot-list-style"
+          itemClass="carousel-item-equal-height px-2"
+          sliderClass="carousel-slider"
+          arrows={true}
+          showDots={false}
+          swipeable={true}
+          draggable={true}
+        >
+          {filteredTVShows.map((show) => (
+            <TVShowCard key={show.id} show={show} allGenres={allGenres} />
+          ))}
+        </Carousel>
+      )}
+    </div>
+  );
+};
 
-      <Carousel
-        responsive={responsive}
-        infinite={true}
-        autoPlay={!searchTerm}
-        autoPlaySpeed={4000}
-        keyBoardControl={true}
-        customTransition="all .5s"
-        transitionDuration={500}
-        containerClass="carousel-container"
-        removeArrowOnDeviceType={["tablet", "mobile"]}
-        dotListClass="custom-dot-list-style"
-        itemClass="carousel-item-equal-height px-2"
-        sliderClass="carousel-slider"
-        arrows={true}
-        showDots={false}
-        swipeable={true}
-        draggable={true}
-      >
-        {filteredTVShows.map((show) => (
-          <TVShowCard key={show.id} show={show} allGenres={allGenres} />
-        ))}
-      </Carousel>
+const TVShowCard = ({ show, allGenres }) => {
+  const { handleTrailer } = useContext(MovieContext);
+  const imageBaseUrl = "https://image.tmdb.org/t/p/";
+  const posterUrl = show.poster_path
+    ? `${imageBaseUrl}w500${show.poster_path}`
+    : `https://via.placeholder.com/500x750?text=${encodeURIComponent(
+      show.name
+    )}`;
+
+  const handleClick = () => {
+    // Gọi API để lấy trailer cho TV show
+    handleTrailer(show.id, "tv", show.name);
+  };
+
+  // Lấy tên thể loại
+  const getGenreNames = (genreIds) => {
+    if (!genreIds || !allGenres.length) return [];
+    return genreIds
+      .slice(0, 2) // Chỉ hiển thị 2 thể loại đầu
+      .map((id) => allGenres.find((genre) => genre.id === id)?.name)
+      .filter(Boolean);
+  };
+
+  const genres = getGenreNames(show.genre_ids);
+
+  return (
+    <div className="mx-2 mb-8 h-full">
+      <div className="bg-[#0f1117] rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer group h-full flex flex-col">
+        {/* Poster Image */}
+        <div className="relative overflow-hidden flex-shrink-0">
+          <img
+            src={posterUrl}
+            alt={show.name}
+            className="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110"
+            onError={(e) => {
+              e.target.src = `https://via.placeholder.com/500x750?text=${encodeURIComponent(
+                show.name
+              )}`;
+            }}
+          />
+
+          {/* Rating Badge */}
+          <div className="absolute top-3 right-3 bg-[#0f1117]/80 text-yellow-400 px-2 py-1 rounded text-sm font-bold flex items-center gap-1">
+            <span>⭐</span> {show.vote_average?.toFixed(1)}/10
+          </div>
+
+          {/* Play Button Overlay */}
+          <div
+            className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            onClick={handleClick}
+          >
+            <div className="bg-red-600 rounded-full p-4 transform scale-75 group-hover:scale-100 transition-transform duration-300 hover:bg-red-700">
+              <svg
+                className="w-8 h-8 text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M8 5v10l7-5-7-5z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-4 flex flex-col flex-grow">
+          {/* Title */}
+          <div className="mb-2">
+            <h3 className="font-bold text-lg text-white group-hover:text-red-500 transition-colors leading-tight">
+              {show.name}
+            </h3>
+          </div>
+    
 
       {loading && tvShows.length > 0 && (
         <div className="text-center py-8">

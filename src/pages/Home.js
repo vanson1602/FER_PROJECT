@@ -3,6 +3,8 @@ import Banner from "../components/Banner";
 import FullMovieList from "../components/FullMovieList";
 import MovieList from "../components/MovieList";
 import MovieSearch from "../components/MovieSearch";
+import CozeChat from "./Chat";
+
 
 const Home = ({ movieSearch = [], handleSearch }) => {
   const [movie, setMovie] = useState([]);
@@ -28,7 +30,7 @@ const Home = ({ movieSearch = [], handleSearch }) => {
       ]);
       const data1 = await res1.json();
       const data2 = await res2.json();
-
+     
       setMovie(data1.results);
       setMovieRate(data2.results);
     };
@@ -48,6 +50,8 @@ const Home = ({ movieSearch = [], handleSearch }) => {
         <FullMovieList />
         <MovieList title={"Phim Hot"} data={movie} />
         <MovieList title={"Phim Đề Cử"} data={movieRate} />
+        <CozeChat></CozeChat>
+        
       </>
     );
   };
