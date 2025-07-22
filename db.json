@@ -1,0 +1,101 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "diemvi",
+      "password": "123",
+      "role": "admin",
+      "fullName": "Admin One"
+    },
+    {
+      "id": "2",
+      "username": "vananh",
+      "password": "123",
+      "role": "admin",
+      "fullName": "Admin Two"
+    },
+    {
+      "id": "3",
+      "username": "vanson",
+      "password": "123",
+      "role": "user",
+      "fullName": "User One"
+    },
+    {
+      "id": "4",
+      "username": "anhquan",
+      "password": "123",
+      "role": "user",
+      "fullName": "User Two"
+    },
+    {
+      "id": "5",
+      "username": "hoangviet",
+      "password": "123",
+      "role": "user",
+      "fullName": "User Three"
+    }
+  ],
+  "vip_movies": [
+    {
+      "id": "1",
+      "title": "Avatar 1",
+      "youtubeId": "cN0kUKNBfxE",
+      "description": "Avatar movie trailer"
+    },
+    {
+      "id": "3",
+      "title": "Địa Đạo",
+      "youtubeId": "-OGDDtsIBHA",
+      "description": "Địa Đạo movie trailer"
+    },
+    {
+      "id": "4",
+      "title": "Iron Man",
+      "youtubeId": "cfVY9wLKltA",
+      "description": "Iron Man movie trailer"
+    },
+    {
+      "id": "5",
+      "title": "Aquaman: The One True King",
+      "youtubeId": "-LOmvVRbuIk",
+      "description": "Aquaman movie trailer"
+    },
+    {
+      "id": "6",
+      "title": "Badlands",
+      "youtubeId": "oFkbsEKaoSE",
+      "description": "Badlands movie trailer"
+    },
+    {
+      "id": "7",
+      "title": "Gạo Nếp Gạo Tẻ",
+      "youtubeId": "DRXkZumnLDo",
+      "description": "Gạo Nếp Gạo Tẻ movie trailer"
+    },
+    {
+      "id": "8",
+      "title": "Cây Táo Nở Hoa",
+      "youtubeId": "i_x__x4osgA",
+      "description": "Cây Táo Nở Hoa movie trailer"
+    },
+    {
+      "id": "9",
+      "title": "Cây Táo Nở Hoa 2",
+      "youtubeId": "es7W3YGmvFQ",
+      "description": "Cây Táo Nở Hoa season 2 trailer"
+    },
+    {
+      "id": "1752773202091",
+      "title": "aa",
+      "youtubeId": "jPjQJYKhhk4",
+      "description": "â"
+    },
+    {
+      "id": "e8ce",
+      "title": "aa",
+      "youtubeId": "jPjQJYKhhk4",
+      "description": "111"
+    }
+  ]
+}

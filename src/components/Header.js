@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Modal from "react-modal";
+import UserManagement from "./UserManagement";
 
 const Header = ({ onSearch }) => {
   const [textSearch, setTextSearch] = useState("");
@@ -9,6 +10,7 @@ const Header = ({ onSearch }) => {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showWatchedModal, setShowWatchedModal] = useState(false);
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
+  const [showUserManagement, setShowUserManagement] = useState(false);
   const [avatar, setAvatar] = useState(() => {
     // Initialize avatar from localStorage
     const savedUser = localStorage.getItem("user");
@@ -24,6 +26,7 @@ const Header = ({ onSearch }) => {
   const fileInputRef = useRef(null);
   const { isAuthenticated, user, openLoginModal, logout } = useAuth();
   const location = useLocation();
+  const isAdmin = user?.role === "admin";
 
   // Mock data for watched and favorite movies
   const watchedMovies = [
@@ -248,10 +251,11 @@ const Header = ({ onSearch }) => {
           Movie<span className="ml-1 text-green-400 animate-ping">•</span>Home
         </div>
 
-        {/* Main Menu */}
-        <nav className="hidden md:flex items-center space-x-8">
+        {/* Main Navigation */}
+        <nav className="hidden md:flex items-center space-x-6">
           <Link
             to="/"
+
             className={`text-lg font-medium transition-all duration-300 hover:scale-110 relative group ${location.pathname === "/"
                 ? "text-green-400"
                 : "text-white hover:text-green-400"
@@ -391,6 +395,17 @@ const Header = ({ onSearch }) => {
                   >
                     ❤️ Phim yêu thích
                   </button>
+                  {isAdmin && (
+                    <button
+                      onClick={() => {
+                        setShowUserManagement(true);
+                        setShowUserMenu(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors"
+                    >
+                      👥 Quản lý người dùng
+                    </button>
+                  )}
                   <button className="block w-full text-left px-4 py-2 hover:bg-[#2c2c2c] transition-colors">
                     📝 Đánh giá của tôi
                   </button>
@@ -707,6 +722,12 @@ const Header = ({ onSearch }) => {
           )}
         </div>
       </Modal>
+
+      {/* User Management Modal */}
+      <UserManagement
+        isOpen={showUserManagement}
+        onClose={() => setShowUserManagement(false)}
+      />
     </header>
   );
 };

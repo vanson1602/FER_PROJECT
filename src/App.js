@@ -11,6 +11,7 @@ import Sports from "./pages/Sports";
 import TVShows from "./pages/TVShows";
 import Live from "./pages/Live";
 import Animation from "./pages/Animation";
+import Vip from "./pages/Vip";
 import { MovieProvider } from "./context/MovieProvider";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -69,6 +70,7 @@ const AppContent = () => {
           <Route path="/tvshows" element={<TVShows />} />
           <Route path="/live" element={<Live />} />
           <Route path="/animation" element={<Animation />} />
+          <Route path="/vip" element={<Vip />} />
         </Routes>
       </div>
       <Footer />
