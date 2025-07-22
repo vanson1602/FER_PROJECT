@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useAuth } from "../context/AuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import FullMovieModal from "./FullMovieModal";
 
 const responsive = {
@@ -325,6 +325,7 @@ const fullMovies = [
 const FullMovieList = ({ selectedGenre = "all", searchTerm = "" }) => {
   const { isAuthenticated, openLoginModal } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const isMoviesView = location.pathname === "/movies";
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -336,8 +337,7 @@ const FullMovieList = ({ selectedGenre = "all", searchTerm = "" }) => {
 
   const handleMovieClick = (movie) => {
     if (isAuthenticated) {
-      setSelectedMovie(movie);
-      setShowModal(true);
+      navigate(`/movie/${movie.id}`);
     } else {
       openLoginModal();
     }
@@ -527,9 +527,15 @@ const MovieCard = ({ movie, onClick, isAuthenticated, isMoviesView }) => {
       className={`${cardSize} relative group cursor-pointer transform transition-all duration-500 hover:z-10`}
       onClick={onClick}
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-purple-500/10 to-blue-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      <div className={`group-hover:scale-105 group-hover:shadow-2xl transition-all duration-500 ease-out ${isMoviesView ? "w-full h-full" : "w-full h-full"}`}>
-        <div className={`relative w-full ${isMoviesView ? "h-[260px]" : "h-[220px]"} overflow-hidden rounded-t-xl`}>
+
+      <div
+        className={`group-hover:scale-105 transition-transform duration-500 ease-in-out ${isMoviesView ? "w-[300px] h-[460px]" : "w-full h-full"
+          }`}
+      >
+        <div
+          className={`relative w-full ${isMoviesView ? "h-[240px]" : "h-[200px]"
+            } overflow-hidden rounded-t-lg`}
+        >
           <img
             src={movie.thumbnail}
             alt={movie.title}
@@ -589,8 +595,12 @@ const MovieCard = ({ movie, onClick, isAuthenticated, isMoviesView }) => {
         </div>
 
         {/* Thông tin phim */}
-        <div className={`bg-gradient-to-b from-gray-800 to-gray-900 p-5 rounded-b-xl border border-gray-700/50 ${isMoviesView ? "h-[240px]" : "h-[220px]"} flex flex-col backdrop-blur-sm shadow-xl`}>
-          <h3 className="text-gray-100 text-lg font-bold mb-2 line-clamp-2 group-hover:text-blue-400 transition-colors duration-300">
+        <div
+          className={`bg-gray-900 shadow-lg border border-gray-700 p-4 rounded-b-lg ${isMoviesView ? "h-[240px]" : "h-[220px]"
+            } flex flex-col`}
+        >
+          <h3 className="text-gray-100 text-lg font-bold mb-2 line-clamp-2">
+
             {movie.title}
           </h3>
 
@@ -620,26 +630,15 @@ const MovieCard = ({ movie, onClick, isAuthenticated, isMoviesView }) => {
             {movie.description}
           </p>
 
-          <button className={`mt-4 w-full py-3 rounded-lg font-medium transition-all duration-500 transform group-hover:scale-105 ${isAuthenticated
-              ? "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg shadow-red-500/25"
-              : "bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-gray-300"
-            }`}>
-            {isAuthenticated ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                  <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                </svg>
-                Xem ngay
-              </span>
-            ) : (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m0 0v2m0-2h2m-2 0h-2m9-6V9a3 3 0 00-3-3H6a3 3 0 00-3 3v6a3 3 0 003 3h12a3 3 0 003-3z" />
-                </svg>
-                Cần đăng nhập
-              </span>
-            )}
+
+          <button
+            className={`mt-3 w-full py-2 rounded-lg font-semibold transition-all duration-300 ${isAuthenticated
+                ? "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg"
+                : "bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-gray-300"
+              }`}
+          >
+            {isAuthenticated ? "▶ Xem ngay" : "🔒 Cần đăng nhập"}
+
           </button>
         </div>
       </div>

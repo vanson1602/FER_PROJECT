@@ -12,6 +12,7 @@ import TVShows from "./pages/TVShows";
 import Live from "./pages/Live";
 import Animation from "./pages/Animation";
 import Vip from "./pages/Vip";
+import MovieDetail from "./pages/MovieDetail";
 import { MovieProvider } from "./context/MovieProvider";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -71,6 +72,7 @@ const AppContent = () => {
           <Route path="/live" element={<Live />} />
           <Route path="/animation" element={<Animation />} />
           <Route path="/vip" element={<Vip />} />
+          <Route path="/movie/:id" element={<MovieDetail />} />
         </Routes>
       </div>
       <Footer />
@@ -83,7 +85,22 @@ function App() {
     <Router>
       <AuthProvider>
         <MovieProvider>
-          <AppContent />
+          <div className="min-h-screen bg-[#0f1117]">
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/movies" element={<Movies />} />
+              <Route path="/series" element={<Series />} />
+              <Route path="/tvshows" element={<TVShows />} />
+              <Route path="/sports" element={<Sports />} />
+              <Route path="/tv" element={<TV />} />
+              <Route path="/live" element={<Live />} />
+              <Route path="/animation" element={<Animation />} />
+              <Route path="/vip" element={<Vip />} />
+              <Route path="/movie/:id" element={<MovieDetail />} />
+            </Routes>
+            <Footer />
+          </div>
           <LoginModal />
         </MovieProvider>
       </AuthProvider>

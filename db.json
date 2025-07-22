@@ -97,5 +97,65 @@
       "youtubeId": "jPjQJYKhhk4",
       "description": "111"
     }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "movieId": "1",
+      "userId": "3",
+      "username": "vanson",
+      "content": "Phim rất hay, đặc biệt là phần kỹ xảo!",
+      "createdAt": "2024-03-20T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "movieId": "1",
+      "userId": "4",
+      "username": "anhquan",
+      "content": "Tuyệt vời, không thể chờ đợi phần tiếp theo!",
+      "createdAt": "2024-03-20T11:30:00Z"
+    },
+    {
+      "id": "1753193226739",
+      "movieId": "3",
+      "userId": "5",
+      "username": "hoangviet",
+      "content": "hay qua",
+      "createdAt": "2025-07-22T14:07:06.739Z"
+    },
+    {
+      "id": "1753193538480",
+      "movieId": "1",
+      "userId": "5",
+      "username": "hoangviet",
+      "content": "nhgjhgjh",
+      "createdAt": "2025-07-22T14:12:18.480Z"
+    }
+  ],
+  "ratings": [
+    {
+      "id": "1",
+      "movieId": "1",
+      "userId": "3",
+      "username": "vanson",
+      "rating": 4.5,
+      "createdAt": "2024-03-20T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "movieId": "1",
+      "userId": "4",
+      "username": "anhquan",
+      "rating": 5,
+      "createdAt": "2024-03-20T11:30:00Z"
+    },
+    {
+      "id": "1753193477209",
+      "movieId": "1",
+      "userId": "5",
+      "username": "hoangviet",
+      "rating": 5,
+      "createdAt": "2025-07-22T14:12:10.069Z"
+    }
   ]
 }
