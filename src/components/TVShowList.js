@@ -240,28 +240,39 @@ const TVShowList = ({ selectedGenre = "all", searchTerm = "" }) => {
         </button>
       </div>
 
-      <Carousel
-        responsive={responsive}
-        infinite={true}
-        autoPlay={!searchTerm} // Không auto play khi đang search
-        autoPlaySpeed={4000}
-        keyBoardControl={true}
-        customTransition="all .5s"
-        transitionDuration={500}
-        containerClass="carousel-container"
-        removeArrowOnDeviceType={["tablet", "mobile"]}
-        dotListClass="custom-dot-list-style"
-        itemClass="carousel-item-equal-height px-2"
-        sliderClass="carousel-slider"
-        arrows={true}
-        showDots={false}
-        swipeable={true}
-        draggable={true}
-      >
-        {filteredTVShows.map((show) => (
-          <TVShowCard key={show.id} show={show} allGenres={allGenres} />
-        ))}
-      </Carousel>
+      {/* Carousel */}
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray-600 text-xl">Đang tải...</div>
+        </div>
+      ) : !filteredTVShows || filteredTVShows.length === 0 ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray-600 text-xl">Không tìm thấy chương trình nào</div>
+        </div>
+      ) : (
+        <Carousel
+          responsive={responsive}
+          infinite={true}
+          autoPlay={!searchTerm} // Không auto play khi đang search
+          autoPlaySpeed={4000}
+          keyBoardControl={true}
+          customTransition="all .5s"
+          transitionDuration={500}
+          containerClass="carousel-container"
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          dotListClass="custom-dot-list-style"
+          itemClass="carousel-item-equal-height px-2"
+          sliderClass="carousel-slider"
+          arrows={true}
+          showDots={false}
+          swipeable={true}
+          draggable={true}
+        >
+          {filteredTVShows.map((show) => (
+            <TVShowCard key={show.id} show={show} allGenres={allGenres} />
+          ))}
+        </Carousel>
+      )}
     </div>
   );
 };
@@ -272,8 +283,8 @@ const TVShowCard = ({ show, allGenres }) => {
   const posterUrl = show.poster_path
     ? `${imageBaseUrl}w500${show.poster_path}`
     : `https://via.placeholder.com/500x750?text=${encodeURIComponent(
-        show.name
-      )}`;
+      show.name
+    )}`;
 
   const handleClick = () => {
     // Gọi API để lấy trailer cho TV show
