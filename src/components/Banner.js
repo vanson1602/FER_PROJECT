@@ -6,6 +6,7 @@ import IconRatingHalf from "../assets/rating-half.png";
 import IconPlay from "../assets/play-button.png";
 import { MovieContext } from "../context/MovieProvider";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const responsive = {
   desktop: {
@@ -188,6 +189,17 @@ const BannerSlide = ({
   getRatingStars,
   isAuthenticated,
 }) => {
+  const navigate = useNavigate();
+  const { openLoginModal } = useAuth();
+
+  const handleDetailClick = () => {
+    if (isAuthenticated) {
+      navigate(`/movie/${movie.id}`);
+    } else {
+      openLoginModal();
+    }
+  };
+
   const backgroundImage = movie.backdrop_path
     ? `${process.env.REACT_APP_IMG_URL}${movie.backdrop_path}`
     : `${process.env.REACT_APP_IMG_URL}${movie.poster_path}`;
@@ -259,7 +271,10 @@ const BannerSlide = ({
                 </span>
               </button>
 
-              <button className="flex items-center space-x-2 px-8 py-3 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105">
+              <button
+                onClick={handleDetailClick}
+                className="flex items-center space-x-2 px-8 py-3 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105"
+              >
                 <span>📋</span>
                 <span>Chi tiết</span>
               </button>

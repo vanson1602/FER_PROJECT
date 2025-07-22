@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useAuth } from "../context/AuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import FullMovieModal from "./FullMovieModal";
 
 const responsive = {
@@ -325,14 +325,14 @@ const fullMovies = [
 const FullMovieList = ({ selectedGenre = "all", searchTerm = "" }) => {
   const { isAuthenticated, openLoginModal } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const isMoviesView = location.pathname === "/movies";
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const handleMovieClick = (movie) => {
     if (isAuthenticated) {
-      setSelectedMovie(movie);
-      setShowModal(true);
+      navigate(`/movie/${movie.id}`);
     } else {
       openLoginModal();
     }
@@ -413,22 +413,22 @@ const FullMovieList = ({ selectedGenre = "all", searchTerm = "" }) => {
                         "family",
                       ].find((g) => g === selectedGenre)
                         ? [
-                            "Kinh dị",
-                            "Hành động",
-                            "Hài hước",
-                            "Tình cảm",
-                            "Tâm lý",
-                            "Gia đình",
-                          ][
-                            [
-                              "horror",
-                              "action",
-                              "comedy",
-                              "romance",
-                              "drama",
-                              "family",
-                            ].indexOf(selectedGenre)
-                          ]
+                          "Kinh dị",
+                          "Hành động",
+                          "Hài hước",
+                          "Tình cảm",
+                          "Tâm lý",
+                          "Gia đình",
+                        ][
+                        [
+                          "horror",
+                          "action",
+                          "comedy",
+                          "romance",
+                          "drama",
+                          "family",
+                        ].indexOf(selectedGenre)
+                        ]
                         : "Khác"}
                     </span>
                   </span>
@@ -510,14 +510,12 @@ const MovieCard = ({ movie, onClick, isAuthenticated, isMoviesView }) => {
       onClick={onClick}
     >
       <div
-        className={`group-hover:scale-105 transition-transform duration-500 ease-in-out ${
-          isMoviesView ? "w-[300px] h-[460px]" : "w-full h-full"
-        }`}
+        className={`group-hover:scale-105 transition-transform duration-500 ease-in-out ${isMoviesView ? "w-[300px] h-[460px]" : "w-full h-full"
+          }`}
       >
         <div
-          className={`relative w-full ${
-            isMoviesView ? "h-[240px]" : "h-[200px]"
-          } overflow-hidden rounded-t-lg`}
+          className={`relative w-full ${isMoviesView ? "h-[240px]" : "h-[200px]"
+            } overflow-hidden rounded-t-lg`}
         >
           <img
             src={movie.thumbnail}
@@ -577,9 +575,8 @@ const MovieCard = ({ movie, onClick, isAuthenticated, isMoviesView }) => {
 
         {/* Thông tin phim */}
         <div
-          className={`bg-gray-900 shadow-lg border border-gray-700 p-4 rounded-b-lg ${
-            isMoviesView ? "h-[240px]" : "h-[220px]"
-          } flex flex-col`}
+          className={`bg-gray-900 shadow-lg border border-gray-700 p-4 rounded-b-lg ${isMoviesView ? "h-[240px]" : "h-[220px]"
+            } flex flex-col`}
         >
           <h3 className="text-gray-100 text-lg font-bold mb-2 line-clamp-2">
             {movie.title}
@@ -606,11 +603,10 @@ const MovieCard = ({ movie, onClick, isAuthenticated, isMoviesView }) => {
           </p>
 
           <button
-            className={`mt-3 w-full py-2 rounded-lg font-semibold transition-all duration-300 ${
-              isAuthenticated
+            className={`mt-3 w-full py-2 rounded-lg font-semibold transition-all duration-300 ${isAuthenticated
                 ? "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg"
                 : "bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-gray-300"
-            }`}
+              }`}
           >
             {isAuthenticated ? "▶ Xem ngay" : "🔒 Cần đăng nhập"}
           </button>

@@ -4,6 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import { useContext } from "react";
 import { MovieContext } from "../context/MovieProvider";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const responsive = {
   superLargeDesktop: {
@@ -28,10 +29,11 @@ const responsive = {
 const MovieList = ({ title, data }) => {
   const { handleTrailer } = useContext(MovieContext);
   const { isAuthenticated, openLoginModal } = useAuth();
+  const navigate = useNavigate();
 
   const handleMovieClick = (movieId) => {
     if (isAuthenticated) {
-      handleTrailer(movieId);
+      navigate(`/movie/${movieId}`);
     } else {
       openLoginModal();
     }
