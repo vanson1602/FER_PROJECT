@@ -243,75 +243,82 @@ const Header = ({ onSearch }) => {
   );
 
   return (
-    <header className="bg-[#111] shadow-lg w-full">
+    <header className="bg-gradient-to-b from-[#111] to-[#1a1a1a] shadow-lg w-full sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
       {/* TOP: Logo - Menu - Auth */}
       <div className="flex items-center justify-between px-8 py-4 border-b border-[#2c2c2c]">
         {/* Logo */}
-        <div className="text-3xl font-extrabold tracking-wide text-white flex items-center hover:scale-105 transition-transform duration-300">
-          Movie<span className="ml-1 text-green-400 animate-pulse">•</span>Home
+        <div className="text-3xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 flex items-center hover:scale-105 transition-transform duration-300">
+          Movie<span className="ml-1 text-green-400 animate-ping">•</span>Home
         </div>
 
         {/* Main Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           <Link
             to="/"
-            className={`text-lg flex items-center space-x-2 ${
-              location.pathname === "/" ? "text-green-400" : "text-gray-300"
-            } hover:text-green-400 transition-colors`}
-          >
-            <span>🏠</span>
-            <span>Trang chủ</span>
-          </Link>
-          <Link
-            to="/movies"
-            className={`text-lg flex items-center space-x-2 ${
-              location.pathname === "/movies"
+
+            className={`text-lg font-medium transition-all duration-300 hover:scale-110 relative group ${location.pathname === "/"
                 ? "text-green-400"
-                : "text-gray-300"
-            } hover:text-green-400 transition-colors`}
+                : "text-white hover:text-green-400"
+              }`}
           >
-            <span>🎬</span>
-            <span>Phim điện ảnh</span>
+            🏠 Trang chủ
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-green-400 to-blue-500 transform origin-left transition-transform duration-300 ${location.pathname === "/" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+              }`}></span>
           </Link>
           <Link
             to="/series"
-            className={`text-lg flex items-center space-x-2 ${
-              location.pathname === "/series"
+            className={`text-lg font-medium transition-all duration-300 hover:scale-110 relative group ${location.pathname === "/series"
                 ? "text-green-400"
-                : "text-gray-300"
-            } hover:text-green-400 transition-colors`}
+                : "text-white hover:text-green-400"
+              }`}
           >
-            <span>📺</span>
-            <span>Phim bộ</span>
+            📺 Phim Bộ
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-green-400 to-blue-500 transform origin-left transition-transform duration-300 ${location.pathname === "/series" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+              }`}></span>
           </Link>
           <Link
-            to="/tv"
-            className={`text-lg flex items-center space-x-2 ${
-              location.pathname === "/tv" ? "text-green-400" : "text-gray-300"
-            } hover:text-green-400 transition-colors`}
+            to="/movies"
+            className={`text-lg font-medium transition-all duration-300 hover:scale-110 relative group ${location.pathname === "/movies"
+                ? "text-green-400"
+                : "text-white hover:text-green-400"
+              }`}
           >
-            <span>📻</span>
-            <span>TV Show</span>
+            🎬 Phim Điện Ảnh
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-green-400 to-blue-500 transform origin-left transition-transform duration-300 ${location.pathname === "/movies" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+              }`}></span>
+          </Link>
+          <Link
+            to="/tvshows"
+            className={`text-lg font-medium transition-all duration-300 hover:scale-110 relative group ${location.pathname === "/tvshows"
+                ? "text-green-400"
+                : "text-white hover:text-green-400"
+              }`}
+          >
+            🎭 TV Show
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-green-400 to-blue-500 transform origin-left transition-transform duration-300 ${location.pathname === "/tvshows" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+              }`}></span>
+          </Link>
+          <Link
+            to="/live"
+            className={`text-lg font-medium transition-all duration-300 hover:scale-110 relative group ${location.pathname === "/live"
+                ? "text-green-400"
+                : "text-white hover:text-green-400"
+              }`}
+          >
+            🔴 Trực Tiếp
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-green-400 to-blue-500 transform origin-left transition-transform duration-300 ${location.pathname === "/live" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+              }`}></span>
           </Link>
           <Link
             to="/animation"
-            className={`text-lg flex items-center space-x-2 ${
-              location.pathname === "/animation"
+            className={`text-lg font-medium transition-all duration-300 hover:scale-110 relative group ${location.pathname === "/animation"
                 ? "text-green-400"
-                : "text-gray-300"
-            } hover:text-green-400 transition-colors`}
+                : "text-white hover:text-green-400"
+              }`}
           >
-            <span>🎨</span>
-            <span>Phim Hoạt Hình</span>
-          </Link>
-          <Link
-            to="/vip"
-            className={`text-lg flex items-center space-x-2 ${
-              location.pathname === "/vip" ? "text-green-400" : "text-gray-300"
-            } hover:text-green-400 transition-colors font-bold`}
-          >
-            <span>🌟</span>
-            <span>VIP Movies</span>
+            🎨 Phim Hoạt Hình
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-green-400 to-blue-500 transform origin-left transition-transform duration-300 ${location.pathname === "/animation" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+              }`}></span>
           </Link>
         </nav>
 
@@ -321,9 +328,15 @@ const Header = ({ onSearch }) => {
             <>
               <button
                 onClick={openLoginModal}
-                className="border border-green-400 text-green-400 font-semibold px-4 py-2 rounded-full text-sm hover:bg-green-400 hover:text-white transition-transform hover:scale-105 shadow-md"
+                className="relative inline-flex items-center justify-center px-6 py-2 overflow-hidden font-medium text-green-400 transition duration-300 ease-out border-2 border-green-400 rounded-full shadow-md group"
               >
-                Đăng nhập
+                <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gradient-to-r from-green-400 to-blue-500 group-hover:translate-x-0 ease">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                  </svg>
+                </span>
+                <span className="absolute flex items-center justify-center w-full h-full text-green-400 transition-all duration-300 transform group-hover:translate-x-full ease">Đăng nhập</span>
+                <span className="relative invisible">Đăng nhập</span>
               </button>
             </>
           ) : (
@@ -333,13 +346,13 @@ const Header = ({ onSearch }) => {
               </span>
               <button
                 onClick={handleUserMenuToggle}
-                className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-orange-500 text-white font-bold text-lg shadow-md hover:scale-110 transition flex items-center justify-center"
+                className="w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-bold text-lg shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center ring-2 ring-offset-2 ring-offset-[#111] ring-green-400"
               >
                 {user?.username?.charAt(0)?.toUpperCase() || "U"}
               </button>
 
               {showUserMenu && (
-                <div className="absolute right-0 mt-16 w-64 bg-[#1e1e1e] rounded-lg shadow-xl border border-[#333] z-50 text-white text-sm py-2 transform origin-top transition-transform duration-200">
+                <div className="absolute right-0 mt-16 w-64 bg-[#1e1e1e] rounded-lg shadow-2xl border border-green-400/20 z-50 text-white text-sm py-2 transform origin-top transition-all duration-300 backdrop-blur-lg bg-opacity-95">
                   <div className="px-4 py-3 border-b border-[#333] flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-full overflow-hidden">
                       {avatar ? (
@@ -413,17 +426,24 @@ const Header = ({ onSearch }) => {
       {/* SEARCH BAR */}
       <div className="px-8 py-4">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
-          <input
-            type="text"
-            value={textSearch}
-            onChange={(e) => setTextSearch(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && onSearch(textSearch)}
-            placeholder="Tìm kiếm phim, TV Show..."
-            className="flex-1 px-5 py-2 rounded-full bg-[#2a2a2a] text-white placeholder-gray-400 text-base focus:outline-none focus:ring-2 focus:ring-green-400"
-          />
+          <div className="relative flex-1">
+            <input
+              type="text"
+              value={textSearch}
+              onChange={(e) => setTextSearch(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && onSearch(textSearch)}
+              placeholder="Tìm kiếm phim, TV Show..."
+              className="w-full px-5 py-3 rounded-full bg-[#2a2a2a] text-white placeholder-gray-400 text-base focus:outline-none focus:ring-2 focus:ring-green-400/50 transition-all duration-300 shadow-inner"
+            />
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
           <button
             onClick={() => onSearch(textSearch)}
-            className="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-full text-base font-semibold shadow-md transition hover:scale-105"
+            className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-green-400/20"
           >
             Tìm kiếm
           </button>
@@ -470,9 +490,8 @@ const Header = ({ onSearch }) => {
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <div
-                  className={`w-24 h-24 rounded-full overflow-hidden ${
-                    isEditing ? "cursor-pointer group" : ""
-                  }`}
+                  className={`w-24 h-24 rounded-full overflow-hidden ${isEditing ? "cursor-pointer group" : ""
+                    }`}
                   onClick={handleAvatarClick}
                 >
                   {(isEditing ? tempAvatar : avatar) ? (
@@ -592,9 +611,8 @@ const Header = ({ onSearch }) => {
                   <button
                     onClick={handleSaveProfile}
                     disabled={isSaving}
-                    className={`px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2 ${
-                      isSaving ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
+                    className={`px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2 ${isSaving ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                   >
                     {isSaving ? (
                       <>
