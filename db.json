@@ -148,14 +148,6 @@
       "username": "anhquan",
       "rating": 5,
       "createdAt": "2024-03-20T11:30:00Z"
-    },
-    {
-      "id": "1753193477209",
-      "movieId": "1",
-      "userId": "5",
-      "username": "hoangviet",
-      "rating": 5,
-      "createdAt": "2025-07-22T14:12:10.069Z"
     }
   ]
 }
